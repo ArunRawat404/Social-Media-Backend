@@ -1,14 +1,9 @@
 const Hashtag = require("../models/hashtag.js");
+const CrudRepository = require("./crud_repository.js");
 
-class HashtagRepository {
-    async create(data) {
-        try {
-            const hashtag = await Hashtag.create(data);
-            return hashtag;
-        } catch (error) {
-            console.log(error)
-            throw error;
-        }
+class HashtagRepository extends CrudRepository {
+    constructor() {
+        super(Hashtag)
     };
 
     async bulkCreate(data) {
@@ -21,29 +16,9 @@ class HashtagRepository {
         }
     }
 
-    async getHashtag(id) {
-        try {
-            const hashtag = await Hashtag.findById(id);
-            return hashtag;
-        } catch (error) {
-            console.log(error)
-            throw error;
-        }
-    }
-
     async getHashtagByName(text) {
         try {
             const hashtag = await Hashtag.find({ text: text });
-            return hashtag;
-        } catch (error) {
-            console.log(error)
-            throw error;
-        }
-    }
-
-    async deleteHashtag(id) {
-        try {
-            const hashtag = await Hashtag.findByIdAndDelete(id);
             return hashtag;
         } catch (error) {
             console.log(error)
