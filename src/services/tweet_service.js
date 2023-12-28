@@ -13,17 +13,19 @@ class TweetService {
         // getting all hashtags(without #) and converting them to lowercase
         const hashtags = content.match(hashtagRegex).map(tag => tag.substring(1).toLowerCase());
 
-        // storing the tweet
-        const tweet = this.tweetRepository.create(data);
+        // removing hashtags and whitespace from tweet data
+        const formatted_data = data;
+        formatted_data.content = formatted_data.content.split("#")[0].trim()
+        const tweet = await this.tweetRepository.create(formatted_data);
 
-        this.createHashtags(hashtags, tweet);
+        await this.createHashtags(hashtags, tweet);
 
         return tweet;
     };
 
     async createHashtags(hashtags, tweet) {
         // checking if hashtag already present 
-        let alreadyPresentHashtagsObj = this.hashtagRepository.getHashtagByName(hashtags);
+        let alreadyPresentHashtagsObj = await this.hashtagRepository.getHashtagByName(hashtags);
         let alreadyPresentHashtags = alreadyPresentHashtagsObj.map(tag => tag.text);
 
         // tags which are not present in database
@@ -43,13 +45,12 @@ class TweetService {
             tag.tweets.push(tweet.id);
             tag.save();
         });
-    }
+    };
 
     async getTweet(tweetId) {
         const tweet = await this.tweetRepository.getTweet(tweetId);
         return tweet;
-    }
-
+    };
 };
 
-module.export = TweetService;
+module.exports = TweetService;

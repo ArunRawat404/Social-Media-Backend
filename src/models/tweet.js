@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const tweetSchema = new mongoose.Schema({
     content: {
-        type: String
+        type: String,
+        required: true
     },
     likes: {
         type: Number
     },
-    noOfRetweets: { 
+    noOfRetweets: {
         type: Number
     },
     comment: {
