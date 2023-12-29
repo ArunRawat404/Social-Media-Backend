@@ -18,7 +18,7 @@ class UserService {
         try {
             const email = data.email;
             const password = data.password;
-            const user = await this.userRepository.findBy(email);
+            const user = await this.userRepository.findBy({ email: email });
             // if user not exist
             if (!user) {
                 throw {
