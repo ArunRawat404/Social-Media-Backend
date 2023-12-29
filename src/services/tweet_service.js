@@ -29,7 +29,7 @@ class TweetService {
         let alreadyPresentHashtags = alreadyPresentHashtagsObj.map(tag => tag.text);
 
         // tags which are not present in database
-        const newHashtags = hashtags.filter(tag => !alreadyPresentHashtags.includes(tag));
+        let newHashtags = hashtags.filter(tag => !alreadyPresentHashtags.includes(tag));
 
         newHashtags = newHashtags.map(tag => {
             return {
@@ -48,7 +48,7 @@ class TweetService {
     };
 
     async getTweet(tweetId) {
-        const tweet = await this.tweetRepository.getTweet(tweetId);
+        const tweet = await this.tweetRepository.get(tweetId);
         return tweet;
     };
 };
