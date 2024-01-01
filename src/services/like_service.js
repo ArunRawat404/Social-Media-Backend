@@ -27,7 +27,7 @@ class LikeService {
         });
         let isAdded;
         if (exists) {
-            likeable.likes.pull(exists.userId);
+            await likeable.likes.pull(exists.id);
             await likeable.save();
             try {
                 await this.likeRepository.destroy({ _id: exists._id });
